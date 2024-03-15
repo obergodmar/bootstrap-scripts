@@ -48,5 +48,9 @@ exists() {
 }
 
 get_version() {
-  echo $(curl -s "https://api.github.com/repos/$1/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
+  local repo=$1
+  local link="https://api.github.com/repos/$repo/releases/latest"
+  local version=$(curl -s $link | grep -Po '"tag_name": "v?\K[^"]*')
+
+  echo $version
 }

@@ -16,9 +16,7 @@ else
   display_message "Starting bootstrap script for server $SERVER_NAME"
 fi
 
-main() {
-  update
-
+install_tools() {
   install_with_package_manager git
   install_with_package_manager bison
   install_with_package_manager rg
@@ -34,14 +32,27 @@ main() {
   install_with_package_manager zsh
 
   install_lazygit
-  install_bat
+  install_bat "$INSTALL"
+  install_delta "$INSTALL"
 
   install_nvm
   install_rust
   install_gvm
 
   install_ohmyzsh
+}
 
+# configure_tools() {
+#
+# }
+
+trap "display_error 'shutdown signal received'; exit 1" INT
+
+main() {
+  sleep 2
+
+  update
+  install_tools
   clone_dotfiles
 }
 
