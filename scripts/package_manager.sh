@@ -21,6 +21,7 @@ install_with_package_manager() {
   fi
 
   display_message "Installing $bin..."
+
   if $INSTALL $bin; then
     display_message "$success"
   else

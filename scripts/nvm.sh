@@ -3,7 +3,7 @@
 install_nvm() {
   SUCCESS="nvm is installed"
 
-  if [[ -d ~/.nvm ]]; then
+  if [[ -d "$HOME/.nvm" ]]; then
     display_message "$SUCCESS"
 
     return

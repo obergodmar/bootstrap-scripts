@@ -42,18 +42,21 @@ install_tools() {
   install_ohmyzsh
 }
 
-# configure_tools() {
-#
-# }
+configure_tools() {
+  configure_git "$SERVER_NAME"
+  configure_bat
+}
 
 trap "display_error 'shutdown signal received'; exit 1" INT
 
 main() {
   sleep 2
 
-  update
-  install_tools
-  clone_dotfiles
+  # update
+  # install_tools
+  # clone_dotfiles
+
+  configure_tools
 }
 
 main

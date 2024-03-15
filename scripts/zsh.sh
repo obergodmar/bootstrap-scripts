@@ -3,7 +3,7 @@
 install_ohmyzsh() {
   ZSH_SUCCESS="Oh my zsh is installed"
 
-  if [[ -d ~/.oh-my-zsh ]]; then
+  if [[ -d "$HOME/.oh-my-zsh" ]]; then
     display_message "$ZSH_SUCCESS"
   else
     INSTALL_SCRIPT=$(curl -fsSL "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh")
@@ -16,7 +16,7 @@ install_ohmyzsh() {
 
   # Installing zsh-autosuggestions zsh plugin
   ZSH_AS=https://github.com/obergodmar/zsh-autosuggestions
-  TARGET=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+  TARGET=${ZSH_CUSTOM:-"$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"}
   ZSH_AS_SUCCESS="zsh plugin 'zsh-autosuggestions' is installed"
 
   if [[ -d $TARGET ]]; then
