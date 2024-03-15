@@ -1,29 +1,34 @@
 #!/usr/bin/env bash
 
 install_ohmyzsh() {
-  ZSH_SUCCESS="Oh my zsh is installed"
+  local zsh_success="Oh my zsh is installed"
 
   if [[ -d "$HOME/.oh-my-zsh" ]]; then
-    display_message "$ZSH_SUCCESS"
+    display_message "$zsh_success"
   else
-    INSTALL_SCRIPT=$(curl -fsSL "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh")
-    if sh -c $INSTALL_SCRIPT "" --unattended; then
-      display_message "$ZSH_SUCCESS"
+    local install_script=$(curl -fsSL "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh")
+
+    if sh -c $install_script "" --unattended; then
+      display_message "$zsh_success"
     else
-      display_error "Oh my zsh was NOT installed"
+      display_error "Could not install ohmyzsh"
     fi
   fi
 
   # Installing zsh-autosuggestions zsh plugin
-  ZSH_AS=https://github.com/obergodmar/zsh-autosuggestions
-  TARGET=${ZSH_CUSTOM:-"$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"}
-  ZSH_AS_SUCCESS="zsh plugin 'zsh-autosuggestions' is installed"
+  local as_repo=https://github.com/obergodmar/zsh-autosuggestions
+  local target="${ZSH_CUSTOM:-"$HOME/.oh-my-zsh/custom"}/plugins/zsh-autosuggestions"
+  local as_sucess="zsh plugin 'zsh-autosuggestions' is installed"
 
-  if [[ -d $TARGET ]]; then
-    display_message "$ZSH_AS_SUCCESS"
+  if [[ -d $target ]]; then
+    display_message "Pulling zsh autosuggestions"
+
+    if ! git -C $target pull; then
+      display_error "Could not pull zsh autosuggestions"
+    fi
   else
-    if git clone $ZSH_AS $TARGET; then
-      display_message "$ZSH_AS_SUCCESS"
+    if git clone $as_repo $target; then
+      display_message "$as_sucess"
     else
       display_error "zsh plugin 'zsh-autosuggestions' was NOT installed"
     fi
