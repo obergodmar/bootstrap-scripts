@@ -76,4 +76,6 @@ configure_nvim() {
       display_error "could not clone nvim config dir"
     fi
   fi
+
+  display_message "Setting neovim complete"
 }

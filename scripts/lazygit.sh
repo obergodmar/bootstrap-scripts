@@ -74,7 +74,7 @@ configure_lazygit() {
   if [[ -f "$config_file" ]]; then
     rm -rf "$config_file"
 
-    display_message "Deleted existing lazygit config file"
+    display_message "Deleted existing $config_file file"
   fi
 
   if [[ -L "$config_file" ]]; then

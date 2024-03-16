@@ -34,6 +34,7 @@ install_tools() {
   install_with_package_manager cmake
   install_with_package_manager luarocks
   install_with_package_manager libxml2-utils
+  install_with_package_manager mycli
 
   install_lazygit
   install_bat "$INSTALL"
@@ -65,6 +66,10 @@ configure_tools() {
   configure_lazygit
   configure_ohmyzsh "$SERVER_NAME"
   configure_nvim
+  configure_mycli
+  configure_tmux
+  configure_screen
+  configure_lemonade
 }
 
 trap "display_error 'shutdown signal received'; exit 1" INT
