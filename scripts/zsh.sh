@@ -83,7 +83,7 @@ EOF
   local zshrc="$HOME/.zshrc"
   local dotfiles_zshrc="$HOME/dotfiles/.zshrc"
 
-  if [[ -f "$zshrc" ]]; then
+  if [[ -f "$zshrc" ]] || [[ -L "$zshrc" ]]; then
     if rm -rf "$zshrc"; then
       display_message "Old .zshrc was deleted"
     else
@@ -91,14 +91,10 @@ EOF
     fi
   fi
 
-  if [[ -L "$zshrc" ]]; then
-    display_message "Config link file exists"
+  if ln -s "$dotfiles_zshrc" "$zshrc"; then
+    display_message "Config file is linked"
   else
-    if ln -s "$dotfiles_zshrc" "$zshrc"; then
-      display_message "Config file is linked"
-    else
-      display_error "Could not link config file"
-    fi
+    display_error "Could not link config file"
   fi
 
   display_message "Setting ohmyzsh complete"
