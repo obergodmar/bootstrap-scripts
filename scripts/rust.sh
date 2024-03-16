@@ -13,7 +13,7 @@ install_rust() {
 
   local install_script=$(curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs)
 
-  if echo "$install_script" | sh -s -- --y; then
+  if echo "$install_script" | sh -s -- -y; then
     display_message "$success"
   else
     display_error "could not install rust"

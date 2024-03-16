@@ -2,13 +2,14 @@
 
 install_ohmyzsh() {
   local zsh_success="Oh my zsh is installed"
+  local ohmyzsh="$HOME/.oh-my-zsh"
 
-  if [[ -d "$HOME/.oh-my-zsh" ]]; then
+  if [[ -d "$ohmyzsh" ]]; then
     display_message "$zsh_success"
   else
-    local install_script=$(curl -fsSL "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh")
+    local repo="https://github.com/ohmyzsh/ohmyzsh.git"
 
-    if sh -c $install_script "" --unattended; then
+    if git clone "$repo" "$ohmyzsh"; then
       display_message "$zsh_success"
     else
       display_error "Could not install ohmyzsh"
@@ -17,7 +18,7 @@ install_ohmyzsh() {
 
   # Installing zsh-autosuggestions zsh plugin
   local as_repo=https://github.com/obergodmar/zsh-autosuggestions
-  local target="${ZSH_CUSTOM:-"$HOME/.oh-my-zsh/custom"}/plugins/zsh-autosuggestions"
+  local target="${ZSH_CUSTOM:-"$ohmyzsh/custom"}/plugins/zsh-autosuggestions"
   local as_sucess="zsh plugin 'zsh-autosuggestions' is installed"
 
   if [[ -d $target ]]; then

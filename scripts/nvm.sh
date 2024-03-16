@@ -20,7 +20,7 @@ install_nvm() {
 
   local install_script=$(curl -o- "https://raw.githubusercontent.com/nvm-sh/nvm/v${version}/install.sh")
 
-  if PROFILE=/dev/null bash -c $install_script; then
+  if echo "$install_script" | PROFILE=/dev/null bash; then
     display_message "$success"
   else
     display_error "could not install nvm"

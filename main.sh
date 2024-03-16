@@ -19,7 +19,7 @@ fi
 install_tools() {
   install_with_package_manager git
   install_with_package_manager bison
-  install_with_package_manager rg
+  install_with_package_manager ripgrep rg
   install_with_package_manager fd-find fdfind
   install_with_package_manager fzf
   install_with_package_manager unzip
@@ -33,7 +33,7 @@ install_tools() {
   install_with_package_manager make
   install_with_package_manager cmake
   install_with_package_manager luarocks
-  install_with_package_manager libxml2-utils
+  install_with_package_manager libxml2-utils xmlint
   install_with_package_manager mycli
 
   install_lazygit
