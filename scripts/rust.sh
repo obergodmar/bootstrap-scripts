@@ -2,8 +2,9 @@
 
 install_rust() {
   local success="rust is installed"
+  local cargo_dir="$HOME/.cargo"
 
-  if exists rustc; then
+  if [[ -d "$cargo_dir" ]]; then
     display_message "$success"
 
     return
@@ -23,7 +24,7 @@ install_rust() {
 install_with_cargo() {
   local bin="$1"
   local crate_name="$2"
-  local options="$3"
+  local options="${@:3}"
 
   local success="$crate_name is installed"
 
@@ -41,7 +42,9 @@ install_with_cargo() {
 
   display_message "Installing $crate_name..."
 
-  if $cargo install "$crate_name $options"; then
+  echo $cargo install "$crate_name" "$options"
+
+  if [[ -z "$options" ]] && $cargo install "$crate_name" || $cargo install "$crate_name" "${@:3}"; then
     display_message "$success"
   else
     display_error "could not install $crate_name"

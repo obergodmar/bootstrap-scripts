@@ -46,7 +46,7 @@ install_tools() {
 
   install_ohmyzsh
 
-  install_with_cargo "stylua" "stylua" "--features lua52"
+  install_with_cargo "stylua" "stylua" "--features" "lua52"
   install_with_cargo "tree-sitter" "tree-sitter-cli"
   install_with_cargo "bob" "bob-nvim"
 

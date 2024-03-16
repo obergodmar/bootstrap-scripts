@@ -2,8 +2,9 @@
 
 install_gvm() {
   local success="gvm is installed"
+  local gvm_dir="$HOME/.gvm"
 
-  if exists gvm; then
+  if [[ -d "$gvm_dir" ]]; then
     display_message "$success"
 
     return
@@ -50,9 +51,9 @@ install_go() {
   fi
 
   if gvm alias create default go1.22.0; then
-    display_message "Setting go1.22.0 as default version";
-    else
-      display_error "could not set default version go"
+    display_message "Setting go1.22.0 as default version"
+  else
+    display_error "could not set default version go"
   fi
 }
 
