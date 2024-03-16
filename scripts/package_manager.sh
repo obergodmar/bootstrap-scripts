@@ -14,7 +14,7 @@ install_with_package_manager() {
   local custom_bin=$2
   local success="$bin is installed"
 
-  if [[ -z $custom_bin ]] && exists $bin || exists $package_name; then
+  if [[ -z $custom_bin ]] && exists $bin || exists $custom_bin; then
     display_message "$success"
 
     return

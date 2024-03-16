@@ -1,21 +1,73 @@
 #!/usr/bin/env bash
 
 install_gvm() {
-  SUCCESS="gvm is installed"
+  local success="gvm is installed"
 
   if exists gvm; then
-    display_message "$SUCCESS"
+    display_message "$success"
 
     return
   fi
 
   display_message "Installing gvm..."
 
-  INSTALL_SCRIPT=$(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
+  local install_script=$(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
 
-  if GVM_NO_UPDATE_PROFILE="true" bash -c $INSTALL_SCRIPT; then
-    display_message "$SUCCESS"
+  if GVM_NO_UPDATE_PROFILE="true" bash -c $install_script; then
+    display_message "$success"
   else
     display_error "could not install gvm"
+  fi
+}
+
+source_gvm() {
+  local gvm="$HOME/.gvm/scripts/gvm"
+
+  if ! [[ -s "$HOME/.gvm/scripts/gvm" ]]; then
+    install_gvm
+  fi
+
+  source "$gvm"
+}
+
+install_go() {
+  local success="go is installed"
+
+  source_gvm
+
+  if exists go; then
+    display_message "$success"
+
+    return
+  fi
+
+  display_message "Installing go..."
+
+  if gvm install go1.22.0 -B; then
+    display_message "$success"
+  else
+    display_error "could not install go"
+  fi
+}
+
+install_with_go() {
+  local bin="$1"
+  local link="$2"
+  local success="$bin is installed"
+
+  source_gvm
+
+  if exists "$bin"; then
+    display_message "$success"
+
+    return
+  fi
+
+  display_message "Installing $bin..."
+
+  if go install "$link"; then
+    display_message "$success"
+  else
+    display_error "could not install $bin"
   fi
 }

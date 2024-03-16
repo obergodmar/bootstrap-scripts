@@ -30,6 +30,10 @@ install_tools() {
   install_with_package_manager tmux
   install_with_package_manager screen
   install_with_package_manager zsh
+  install_with_package_manager make
+  install_with_package_manager cmake
+  install_with_package_manager luarocks
+  install_with_package_manager libxml2-utils
 
   install_lazygit
   install_bat "$INSTALL"
@@ -40,12 +44,27 @@ install_tools() {
   install_gvm
 
   install_ohmyzsh
+
+  install_with_cargo "stylua" "stylua" "--features lua52"
+  install_with_cargo "tree-sitter" "tree-sitter-cli"
+  install_with_cargo "bob" "bob-nvim"
+
+  install_luacheck
+
+  install_node
+  install_with_npm yarn
+  install_with_npm cspell
+  install_with_npm prettier
+
+  install_nvim
 }
 
 configure_tools() {
   configure_git "$SERVER_NAME"
   configure_bat
   configure_lazygit
+  configure_ohmyzsh "$SERVER_NAME"
+  configure_nvim
 }
 
 trap "display_error 'shutdown signal received'; exit 1" INT
@@ -58,6 +77,10 @@ main() {
   clone_dotfiles
 
   configure_tools
+
+  install_go
+  install_with_go "shfmt" "mvdan.cc/sh/v3/cmd/shfmt@latest"
+  install_with_go "lemonade" "github.com/lemonade-command/lemonade@latest"
 }
 
 main
