@@ -5,8 +5,7 @@ for script in ./scripts/*; do
 done
 
 if [[ $(id -u) = 0 ]]; then
-  display_error "The script should NOT be executed with root privileges"
-  exit 1
+  display_warning "The script should NOT be executed with root privileges"
 fi
 
 SERVER_NAME=$([[ -z $1 ]] && echo "obergodmar" || echo $1)
