@@ -54,3 +54,17 @@ get_version() {
 
   echo $version
 }
+
+get_arch() {
+  local arch=$(uname -i)
+
+  if [[ $arch == x86_64* ]]; then
+    echo "x86_64"
+  elif [[ $arch == i*86 ]]; then
+    echo "32-bit"
+  elif [[ $arch == arm* ]] || [[ $arch == aarch64 ]]; then
+    echo "arm64"
+  else
+    echo "unknown"
+  fi
+}

@@ -52,7 +52,14 @@ install_deb_package() {
     return
   fi
 
-  local link="https://github.com/$repo_name/releases/latest/download/${package_name}_${version}_amd64.deb"
+  local arch=$(get_arch)
+  if [[ $arch == "x86_64" ]]; then
+    arch="amd64"
+  elif [[ $arch == "32-bit" ]]; then
+    arch="i686"
+  fi
+
+  local link="https://github.com/$repo_name/releases/latest/download/${package_name}_${version}_${arch}.deb"
   local tmp_file="$TMP/${bin}.deb"
 
   if curl -Lo "$tmp_file" "$link"; then

@@ -20,7 +20,9 @@ install_lazygit() {
     return
   fi
 
-  local link="https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${version}_Linux_x86_64.tar.gz"
+  local arch=$(get_arch)
+
+  local link="https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${version}_Linux_${arch}.tar.gz"
   local tmp_file="$TMP/lazygit.tar.gz"
   local dist_file="$TMP/lazygit"
 
