@@ -29,6 +29,8 @@ install_tools() {
   install_with_package_manager tmux
   install_with_package_manager screen
   install_with_package_manager zsh
+  install_with_package_manager gcc
+  install_with_package_manager g++
   install_with_package_manager make
   install_with_package_manager cmake
   install_with_package_manager luarocks
