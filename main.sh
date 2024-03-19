@@ -37,6 +37,7 @@ install_tools() {
   install_with_package_manager libxml2-utils xmlint
   install_with_package_manager mycli
   install_with_package_manager bsdmainutils
+  install_with_package_manager trash-cli
 
   install_lazygit
   install_bat "$INSTALL"
