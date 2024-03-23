@@ -56,6 +56,12 @@ install_node() {
   else
     display_error "could not install node"
   fi
+
+  if nvm use v20; then
+    display_message "default node is set to v20"
+  else
+    display_error "could not set default node version"
+  fi
 }
 
 install_with_npm() {
