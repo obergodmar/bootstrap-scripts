@@ -31,6 +31,8 @@ install_tools() {
   install_with_package_manager zsh
   install_with_package_manager gcc
   install_with_package_manager g++
+  install_with_package_manager python3
+  install_with_package_manager python3-pip
   install_with_package_manager make
   install_with_package_manager cmake
   install_with_package_manager luarocks
@@ -62,6 +64,8 @@ install_tools() {
   install_with_npm prettier
 
   install_nvim
+
+  python3 -m pip install --user libtmux
 }
 
 configure_tools() {
