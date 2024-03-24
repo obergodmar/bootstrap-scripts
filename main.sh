@@ -42,7 +42,11 @@ install_tools() {
     mycli \
     bsdmainutils \
     trash-cli \
-    duf
+    duf \
+    iftop \
+    vnstat \
+    wireguard \
+    qrencode
 
   install_lazygit
   install_bat "$INSTALL"
