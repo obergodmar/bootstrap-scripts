@@ -10,22 +10,15 @@ update() {
 }
 
 install_with_package_manager() {
-  local bin=$1
-  local custom_bin=$2
-  local success="$bin is installed"
+  local packages=${@:1}
+  local success="$packages are installed"
 
-  if [[ -z $custom_bin ]] && exists $bin || exists $custom_bin; then
-    display_message "$success"
+  display_message "Installing $packages..."
 
-    return
-  fi
-
-  display_message "Installing $bin..."
-
-  if $INSTALL $bin; then
+  if $INSTALL $packages; then
     display_message "$success"
   else
-    display_error "$bin was NOT installed"
+    display_error "$packages where NOT installed"
   fi
 }
 

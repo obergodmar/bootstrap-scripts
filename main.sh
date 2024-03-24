@@ -16,31 +16,33 @@ else
 fi
 
 install_tools() {
-  install_with_package_manager git
-  install_with_package_manager bison
-  install_with_package_manager ripgrep rg
-  install_with_package_manager fd-find fdfind
-  install_with_package_manager fzf
-  install_with_package_manager unzip
-  install_with_package_manager wget
-  install_with_package_manager curl
-  install_with_package_manager gzip
-  install_with_package_manager tar
-  install_with_package_manager tmux
-  install_with_package_manager screen
-  install_with_package_manager zsh
-  install_with_package_manager gcc
-  install_with_package_manager g++
-  install_with_package_manager python3
-  install_with_package_manager python3-pip
-  install_with_package_manager make
-  install_with_package_manager cmake
-  install_with_package_manager luarocks
-  install_with_package_manager libxml2-utils xmlint
-  install_with_package_manager mycli
-  install_with_package_manager bsdmainutils
-  install_with_package_manager trash-cli
-  install_with_package_manager duf
+  local packages=""
+
+  install_with_package_manager git \
+    bison \
+    ripgrep \
+    fd-find \
+    fzf \
+    unzip \
+    wget \
+    curl \
+    gzip \
+    tar \
+    tmux \
+    screen \
+    zsh \
+    gcc \
+    g++ \
+    python3 \
+    python3-pip \
+    make \
+    cmake \
+    luarocks \
+    libxml2-utils \
+    mycli \
+    bsdmainutils \
+    trash-cli \
+    duf
 
   install_lazygit
   install_bat "$INSTALL"
