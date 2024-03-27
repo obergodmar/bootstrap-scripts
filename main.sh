@@ -46,7 +46,8 @@ install_tools() {
     iftop \
     vnstat \
     wireguard \
-    qrencode
+    qrencode \
+    autossh
 
   install_lazygit
   install_bat "$INSTALL"
