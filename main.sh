@@ -74,7 +74,7 @@ install_tools() {
   )
 
   if [[ $PACKAGE_MANAGER == "apt" ]]; then
-    install_with_brew "${common_tool_names[@]}" "${ubuntu_tool_names[@]}"
+    install_with_apt "${common_tool_names[@]}" "${ubuntu_tool_names[@]}"
 
     install_lazygit
     install_deb_package "bat" "sharkdp/bat" "bat"

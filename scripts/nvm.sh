@@ -47,7 +47,7 @@ install_node() {
   display_message "Installing node..."
 
   if nvm install v20; then
-    display_message $success
+    display_message "$success"
   else
     display_error "could not install node"
   fi
