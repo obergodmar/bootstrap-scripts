@@ -50,9 +50,9 @@ exists() {
 get_version() {
   local repo=$1
   local link="https://api.github.com/repos/$repo/releases/latest"
-  local version=$(curl -s $link | grep -Po '"tag_name": "v?\K[^"]*')
+  local version=$(curl -s $link)
 
-  echo $version
+  echo $(jq -r .tag_name <<<"$version" | sed 's/v//')
 }
 
 get_arch() {
@@ -66,5 +66,15 @@ get_arch() {
     echo "arm64"
   else
     echo "unknown"
+  fi
+}
+
+get_os() {
+  if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    echo "linux"
+  elif [[ "$OSTYPE" == "darwin"* ]]; then
+    echo "macos"
+  else
+    echo "unsupported os"
   fi
 }

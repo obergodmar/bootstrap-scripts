@@ -1,25 +1,63 @@
 #!/usr/bin/env bash
 
-UPDATE="sudo apt-get update"
-INSTALL="sudo apt install -y"
+get_package_manager() {
+  local os=$1
+
+  if [[ $os == "linux" ]] && exists apt; then
+    echo "apt"
+  elif [[ $os == "macos" ]] && exists brew; then
+    echo "brew"
+  fi
+}
+
+update_with_package_manager() {
+  local cmd="$1"
+
+  local success="Successfully updated"
+
+  if $cmd; then
+    display_message "$success"
+  else
+    display_error "could not update"
+  fi
+
+}
 
 update() {
   display_message "Updating..."
 
-  $UPDATE
+  local package_mangager=$1
+  if [[ $package_mangager == "apt" ]]; then
+    update_with_package_manager "sudo apt-get update"
+  elif [[ $package_mangager == "brew" ]]; then
+    update_with_package_manager "brew update"
+  fi
 }
 
 install_with_package_manager() {
-  local packages=${@:1}
+  local cmd=$1
+  local packages=${2}
   local success="$packages are installed"
 
   display_message "Installing $packages..."
 
-  if $INSTALL $packages; then
+  if $cmd $packages; then
     display_message "$success"
   else
     display_error "$packages where NOT installed"
   fi
+}
+
+install_with_apt() {
+  local packages=${@:1}
+
+  install_with_package_manager "sudo apt install -y" "$packages"
+}
+
+install_with_brew() {
+  local packages="$@"
+
+  install_with_package_manager "brew install" "$packages"
 }
 
 install_deb_package() {
@@ -63,7 +101,7 @@ install_deb_package() {
     rm $tmp_file
   fi
 
-  if $INSTALL $tmp_file; then
+  if sudo apt install -y $tmp_file; then
     display_message "$success"
   else
     display_error "could not install deb package"

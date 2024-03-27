@@ -15,43 +15,77 @@ else
   display_message "Starting bootstrap script for server $SERVER_NAME"
 fi
 
+OS=$(get_os)
+if [[ $OS == "unsupported os" ]]; then
+  display_error "$OS"
+
+  exit 1
+fi
+
+PACKAGE_MANAGER=$(get_package_manager "$OS")
+if [[ -z $PACKAGE_MANAGER ]]; then
+  display_error "Cannot find a package manager for $OS"
+
+  exit 1
+fi
+
 install_tools() {
-  local packages=""
+  local common_tool_names=(
+    "git"
+    "bison"
+    "ripgrep"
+    "fzf"
+    "unzip"
+    "wget"
+    "curl"
+    "gzip"
+    "tmux"
+    "screen"
+    "zsh"
+    "gcc"
+    "python3"
+    "make"
+    "cmake"
+    "luarocks"
+    "mycli"
+    "duf"
+    "iftop"
+    "vnstat"
+    "qrencode"
+    "autossh"
+    "jq"
+  )
+  local ubuntu_tool_names=(
+    "fd-find"
+    "tar"
+    "g++"
+    "python3-pip"
+    "libxml2-utils"
+    "bsdmainutils"
+    "trash-cli"
+    "wireguard"
+  )
+  local macos_tool_names=(
+    "fd"
+    "gnu-tar"
+    "lazygit"
+    "bat"
+    "git-delta"
+  )
 
-  install_with_package_manager git \
-    bison \
-    ripgrep \
-    fd-find \
-    fzf \
-    unzip \
-    wget \
-    curl \
-    gzip \
-    tar \
-    tmux \
-    screen \
-    zsh \
-    gcc \
-    g++ \
-    python3 \
-    python3-pip \
-    make \
-    cmake \
-    luarocks \
-    libxml2-utils \
-    mycli \
-    bsdmainutils \
-    trash-cli \
-    duf \
-    iftop \
-    vnstat \
-    wireguard \
-    qrencode \
-    autossh
+  if [[ $PACKAGE_MANAGER == "apt" ]]; then
+    install_with_brew "${common_tool_names[@]}" "${ubuntu_tool_names[@]}"
 
-  install_lazygit
-  install_bat "$INSTALL"
-  install_delta "$INSTALL"
+    install_lazygit
+    install_deb_package "bat" "sharkdp/bat" "bat"
+    install_deb_package "delta" "dandavison/delta" "git-delta"
+
+    python3 -m pip install --user libtmux
+  elif [[ $PACKAGE_MANAGER == "brew" ]]; then
+    install_with_brew "${common_tool_names[@]}" "${macos_tool_names[@]}"
+
+    python3 -m pip install --user libtmux --break-system-packages
+  fi
 
   install_nvm
   install_rust
@@ -71,15 +105,13 @@ install_tools() {
   install_with_npm prettier
 
   install_nvim
-
-  python3 -m pip install --user libtmux
 }
 
 configure_tools() {
   configure_git "$SERVER_NAME"
   configure_bat
   configure_lazygit
-  configure_ohmyzsh "$SERVER_NAME"
+  configure_ohmyzsh "$SERVER_NAME" "$OS"
   configure_nvim
   configure_mycli
   configure_tmux
@@ -92,8 +124,9 @@ trap "display_error 'shutdown signal received'; exit 1" INT
 main() {
   sleep 2
 
-  update
+  update "$PACKAGE_MANAGER"
   install_tools
+
   clone_dotfiles
 
   configure_tools

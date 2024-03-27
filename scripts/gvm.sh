@@ -36,12 +36,6 @@ install_go() {
 
   source_gvm
 
-  if exists go; then
-    display_message "$success"
-
-    return
-  fi
-
   display_message "Installing go..."
 
   if gvm install go1.22.0 -B; then

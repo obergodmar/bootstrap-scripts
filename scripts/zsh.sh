@@ -42,6 +42,7 @@ configure_ohmyzsh() {
   fi
 
   local server_name=$1
+  local os=$2
 
   display_message "Setting ohmyzsh..."
 
@@ -99,7 +100,7 @@ EOF
 
   display_message "Setting ohmyzsh complete"
 
-  if [[ $SHELL =~ $(which zsh) ]]; then
+  if [[ $SHELL == */zsh ]]; then
     display_message "zsh is default shell"
 
     return

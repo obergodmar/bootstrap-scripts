@@ -3,7 +3,7 @@
 install_nvm() {
   local success="nvm is installed"
 
-  if [[ -d "$HOME/.nvm" ]]; then
+  if [[ -d "$NVM_DIR" ]]; then
     display_message "$success"
 
     return
@@ -19,6 +19,7 @@ install_nvm() {
   fi
 
   local install_script=$(curl -o- "https://raw.githubusercontent.com/nvm-sh/nvm/v${version}/install.sh")
+  echo $version "https://raw.githubusercontent.com/nvm-sh/nvm/v${version}/install.sh"
 
   if echo "$install_script" | PROFILE=/dev/null bash; then
     display_message "$success"
@@ -43,12 +44,6 @@ install_node() {
 
   source_nvm
 
-  if exists node; then
-    display_message "$success"
-
-    return
-  fi
-
   display_message "Installing node..."
 
   if nvm install v20; then
@@ -69,12 +64,6 @@ install_with_npm() {
   local success="$package is installed"
 
   source_nvm
-
-  if exists "$package"; then
-    display_message "$success"
-
-    return
-  fi
 
   display_message "Installing $package..."
 
