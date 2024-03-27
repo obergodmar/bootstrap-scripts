@@ -26,10 +26,9 @@ update_with_package_manager() {
 update() {
   display_message "Updating..."
 
-  local package_mangager=$1
-  if [[ $package_mangager == "apt" ]]; then
+  if [[ $PACKAGE_MANGAGER == "apt" ]]; then
     update_with_package_manager "sudo apt-get update"
-  elif [[ $package_mangager == "brew" ]]; then
+  elif [[ $PACKAGE_MANGAGER == "brew" ]]; then
     update_with_package_manager "brew update"
   fi
 }

@@ -9,14 +9,12 @@ echo_run() {
 }
 
 configure_git() {
-  local server_name=$1
-
   display_message "Setting global .gitconfig..."
 
   local git_cmd="git config --global"
 
-  echo_run $git_cmd user.name "Vitaly ($server_name)"
-  echo_run $git_cmd user.email "obergodmar@gmail.com"
+  echo_run $git_cmd user.name "${GIT_USER_NAME:-"Vitaly ($SERVER_NAME)"}"
+  echo_run $git_cmd user.email "${GIT_USER_EMAIL:-"obergodmar@gmail.com"}"
 
   echo_run $git_cmd core.editor "nvim"
   echo_run $git_cmd core.pager "delta"

@@ -41,9 +41,6 @@ configure_ohmyzsh() {
     clone_dotfiles
   fi
 
-  local server_name=$1
-  local os=$2
-
   display_message "Setting ohmyzsh..."
 
   local obergodmar_theme="$HOME/.oh-my-zsh/themes/obergodmar.zsh-theme"
@@ -63,7 +60,7 @@ ZSH_THEME_RUBY_PROMPT_PREFIX="%{\$fg_bold[red]%}‹"
 ZSH_THEME_RUBY_PROMPT_SUFFIX="›%{\$reset_color%}"
 
 PROMPT='
-%{\$fg_bold[green]%}%~%{\$reset_color%}\$(git_prompt_info)\$(virtualenv_prompt_info) $server_name ⌚ %{\$fg_bold[red]%}%*%{\$reset_color%}
+%{\$fg_bold[green]%}%~%{\$reset_color%}\$(git_prompt_info)\$(virtualenv_prompt_info) ${OH_MY_ZSH_NAME:-$SERVER_NAME} ⌚ %{\$fg_bold[red]%}%*%{\$reset_color%}
 $ '
 
 RPROMPT='\$(ruby_prompt_info)'

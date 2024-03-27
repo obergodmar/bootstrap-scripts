@@ -8,12 +8,14 @@ if [[ $(id -u) = 0 ]]; then
   display_warning "The script should NOT be executed with root privileges"
 fi
 
-SERVER_NAME=$([[ -z $1 ]] && echo "obergodmar" || echo $1)
-if [[ -z $1 ]]; then
-  display_warning "Name for the server is NOT specified. Continue with '$SERVER_NAME'"
+if ! [[ -f '.env' ]]; then
+  display_warning 'There is no .env file'
 else
-  display_message "Starting bootstrap script for server $SERVER_NAME"
+  source .env
 fi
+
+SERVER_NAME=${SERVER_NAME:-obergodmar}
+display_message "Starting bootstrap script for server $SERVER_NAME"
 
 OS=$(get_os)
 if [[ $OS == "unsupported os" ]]; then
@@ -108,10 +110,10 @@ install_tools() {
 }
 
 configure_tools() {
-  configure_git "$SERVER_NAME"
+  configure_git
   configure_bat
   configure_lazygit
-  configure_ohmyzsh "$SERVER_NAME" "$OS"
+  configure_ohmyzsh
   configure_nvim
   configure_mycli
   configure_tmux
@@ -124,7 +126,7 @@ trap "display_error 'shutdown signal received'; exit 1" INT
 main() {
   sleep 2
 
-  update "$PACKAGE_MANAGER"
+  update
   install_tools
 
   clone_dotfiles
