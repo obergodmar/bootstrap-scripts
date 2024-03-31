@@ -56,6 +56,7 @@ install_tools() {
     "qrencode"
     "autossh"
     "jq"
+    "btop"
   )
   local ubuntu_tool_names=(
     "fd-find"
@@ -119,6 +120,7 @@ configure_tools() {
   configure_tmux
   configure_screen
   configure_lemonade
+  configure_btop
 }
 
 trap "display_error 'shutdown signal received'; exit 1" INT

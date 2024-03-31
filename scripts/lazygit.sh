@@ -54,40 +54,9 @@ install_lazygit() {
 }
 
 configure_lazygit() {
-  if ! [[ -d "$HOME/dotfiles" ]]; then
-    clone_dotfiles
-  fi
-
   display_message "Setting lazygit..."
 
-  local config_dir="$HOME/.config/lazygit"
-  local config_file="$config_dir/config.yml"
-
-  local dotfiles_file="$HOME/dotfiles/.config/lazygit/config.yml"
-
-  if ! [[ -d "$config_dir" ]]; then
-    display_message "Creating lazygit config directory"
-
-    if ! mkdir -p "$config_dir"; then
-      display_error "Could not create lazygit config directory"
-    fi
-  fi
-
-  if [[ -f "$config_file" ]]; then
-    rm -rf "$config_file"
-
-    display_message "Deleted existing $config_file file"
-  fi
-
-  if [[ -L "$config_file" ]]; then
-    display_message "Config link file exists"
-  else
-    if ln -s "$dotfiles_file" "$config_file"; then
-      display_message "Config file is linked"
-    else
-      display_error "Could not link config file"
-    fi
-  fi
+  link_config_file ".config/lazygit" "config.yml"
 
   display_message "Setting lazygit complete"
 }

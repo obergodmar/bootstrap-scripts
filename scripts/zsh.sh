@@ -37,19 +37,20 @@ install_ohmyzsh() {
 }
 
 configure_ohmyzsh() {
-  if ! [[ -d "$HOME/dotfiles" ]]; then
-    clone_dotfiles
-  fi
-
   display_message "Setting ohmyzsh..."
 
   local obergodmar_theme="$HOME/.oh-my-zsh/themes/obergodmar.zsh-theme"
   if [[ -f "$obergodmar_theme" ]]; then
-    display_message "ohmyzsh theme exists"
-  else
-    display_message "Creating ohmyzsh theme"
-    if touch "$obergodmar_theme"; then
-      cat >$obergodmar_theme <<EOF
+    display_message "ohmyzsh theme exists. Renaming..."
+
+    if mv "$obergodmar_theme" "$obergodmar_theme.old"; then
+      display_message "Renamed existed theme file to $obergodmar_theme.old"
+    fi
+  fi
+
+  display_message "Creating ohmyzsh theme"
+  if touch "$obergodmar_theme"; then
+    cat >$obergodmar_theme <<EOF
 ZSH_THEME_GIT_PROMPT_PREFIX=" on %{\$fg[magenta]%}\uE0A0 "
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{\$reset_color%}"
 ZSH_THEME_GIT_PROMPT_DIRTY="%{\$fg[red]%}!"
@@ -72,28 +73,12 @@ ZSH_THEME_VIRTUALENV_PREFIX=\$ZSH_THEME_VIRTUAL_ENV_PROMPT_PREFIX
 ZSH_THEME_VIRTUALENV_SUFFIX=\$ZSH_THEME_VIRTUAL_ENV_PROMPT_SUFFIX
 EOF
 
-      display_message "ohmyzsh theme created"
-    else
-      display_error "could not create theme file"
-    fi
-  fi
-
-  local zshrc="$HOME/.zshrc"
-  local dotfiles_zshrc="$HOME/dotfiles/.zshrc"
-
-  if [[ -f "$zshrc" ]] || [[ -L "$zshrc" ]]; then
-    if rm -rf "$zshrc"; then
-      display_message "Old .zshrc was deleted"
-    else
-      display_error "could not delete old .zshrc file"
-    fi
-  fi
-
-  if ln -s "$dotfiles_zshrc" "$zshrc"; then
-    display_message "Config file is linked"
+    display_message "ohmyzsh theme created"
   else
-    display_error "Could not link config file"
+    display_error "could not create theme file"
   fi
+
+  link_config_file "." ".zshrc"
 
   display_message "Setting ohmyzsh complete"
 
