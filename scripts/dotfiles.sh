@@ -40,10 +40,10 @@ link_config_file() {
   local config_file="$HOME/$config_dir/$config_name"
   local dotfiles_file="$DOTFILES/$config_dir/$config_name"
 
-  if ! [[ -d "$config_dir" ]]; then
+  if ! [[ -d "$HOME/$config_dir" ]]; then
     display_message "Creating $config_dir directory"
 
-    if ! mkdir -p "$config_dir"; then
+    if ! mkdir -p "$HOME/$config_dir"; then
       display_error "Could not create $config_dir directory"
     fi
   fi
