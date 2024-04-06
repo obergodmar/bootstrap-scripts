@@ -57,6 +57,7 @@ install_tools() {
     "autossh"
     "jq"
     "btop"
+    "httpie"
   )
   local ubuntu_tool_names=(
     "fd-find"
