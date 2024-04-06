@@ -67,6 +67,8 @@ install_tools() {
     "bsdmainutils"
     "trash-cli"
     "wireguard"
+    "libcurl4-gnutls-dev"
+    "tidy"
   )
   local macos_tool_names=(
     "fd"
@@ -74,6 +76,7 @@ install_tools() {
     "lazygit"
     "bat"
     "git-delta"
+    "tidy-html5"
   )
 
   if [[ $PACKAGE_MANAGER == "apt" ]]; then
@@ -82,6 +85,11 @@ install_tools() {
     install_lazygit
     install_deb_package "bat" "sharkdp/bat" "bat"
     install_deb_package "delta" "dandavison/delta" "git-delta"
+
+    install_with_luarocks lua-curl "CURL_INCDIR=/usr/include/x87_64-linux-gnu"
+    install_with_luarocks nvim-nio
+    install_with_luarocks mimetypes
+    install_with_luarocks xml2lua
 
     python3 -m pip install --user libtmux
   elif [[ $PACKAGE_MANAGER == "brew" ]]; then
@@ -100,7 +108,7 @@ install_tools() {
   install_with_cargo "tree-sitter" "tree-sitter-cli"
   install_with_cargo "bob" "bob-nvim"
 
-  install_luacheck
+  install_with_luarocks luacheck
 
   install_node
   install_with_npm yarn

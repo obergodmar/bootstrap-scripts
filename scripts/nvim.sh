@@ -1,28 +1,5 @@
 #!/usr/bin/env bash
 
-install_luacheck() {
-  local success="luacheck is installed"
-  local error="could not install luacheck"
-
-  if exists luacheck; then
-    display_message "$success"
-
-    return
-  fi
-
-  if ! exists luarocks; then
-    display_error "$error"
-  fi
-
-  display_message "Installing luacheck..."
-
-  if sudo luarocks install luacheck; then
-    display_message "$success"
-  else
-    display_error "$error"
-  fi
-}
-
 install_nvim() {
   local success="nvim is installed"
   local version="0.9.5"
