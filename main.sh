@@ -108,6 +108,8 @@ install_tools() {
   install_with_npm cspell
   install_with_npm prettier
 
+  install_bun
+
   install_nvim
 }
 
