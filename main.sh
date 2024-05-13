@@ -58,6 +58,7 @@ install_tools() {
     "jq"
     "btop"
     "httpie"
+    "trash-cli"
   )
   local ubuntu_tool_names=(
     "fd-find"
@@ -66,7 +67,6 @@ install_tools() {
     "python3-pip"
     "libxml2-utils"
     "bsdmainutils"
-    "trash-cli"
     "wireguard"
   )
   local macos_tool_names=(
@@ -105,7 +105,7 @@ install_tools() {
   install_luacheck
 
   install_node
-  install_with_npm yarn
+  install_with_npm yarn@1.22.19
   install_with_npm cspell
   install_with_npm prettier
 
