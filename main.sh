@@ -51,6 +51,7 @@ install_tools() {
     "luarocks"
     "mycli"
     "duf"
+    "ncdu"
     "iftop"
     "vnstat"
     "qrencode"
