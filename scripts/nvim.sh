@@ -25,7 +25,7 @@ install_luacheck() {
 
 install_nvim() {
   local success="nvim is installed"
-  local version="0.9.5"
+  local version="stable"
 
   if exists nvim; then
     display_message "$success"
