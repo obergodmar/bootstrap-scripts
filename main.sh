@@ -60,6 +60,7 @@ install_tools() {
     "btop"
     "httpie"
     "trash-cli"
+    "entr"
   )
   local ubuntu_tool_names=(
     "fd-find"
