@@ -148,6 +148,7 @@ main() {
   install_go
   install_with_go "shfmt" "mvdan.cc/sh/v3/cmd/shfmt@latest"
   install_with_go "lemonade" "github.com/lemonade-command/lemonade@latest"
+  install_with_go "tmux-fastcopy" "github.com/abhinav/tmux-fastcopy@latest"
 }
 
 main
