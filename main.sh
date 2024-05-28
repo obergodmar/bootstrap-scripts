@@ -101,7 +101,13 @@ install_tools() {
 
   install_with_cargo "stylua" "stylua" "--features" "lua52"
   install_with_cargo "tree-sitter" "tree-sitter-cli"
-  install_with_cargo "bob" "bob-nvim"
+
+  if [[ $(get_arch) == "x86_64" ]]; then
+    install_with_cargo "bob" "bob-nvim"
+
+    install_nvim
+  fi
+
   install_with_cargo "eza" "eza"
 
   install_luacheck
@@ -112,8 +118,6 @@ install_tools() {
   install_with_npm prettier
 
   install_bun
-
-  install_nvim
 }
 
 configure_tools() {

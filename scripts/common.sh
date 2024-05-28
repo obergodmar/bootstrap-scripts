@@ -57,6 +57,9 @@ get_version() {
 
 get_arch() {
   local arch=$(uname -i)
+  if [[ -n $ARCH_OVERRIDE ]]; then
+    arch=$ARCH_OVERRIDE
+  fi
 
   if [[ $arch == x86_64* ]]; then
     echo "x86_64"
