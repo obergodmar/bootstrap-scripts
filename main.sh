@@ -104,6 +104,7 @@ install_tools() {
     "mingw-w64-ucrt-x86_64-fd"
     "tar"
     "python"
+    "mingw-w64-ucrt-x86_64-python-pip"
     "mingw-w64-ucrt-x86_64-bat"
     "mingw-w64-ucrt-x86_64-delta"
     "mingw-w64-ucrt-x86_64-rust"
