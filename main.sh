@@ -101,7 +101,7 @@ install_tools() {
     install_with_brew "${common_tool_names[@]}" "${macos_tool_names[@]}"
 
     python3 -m pip install --user libtmux --break-system-packages
-  elif [[ $PACKAGE_MANAGER == "pacman"]]; then
+  elif [[ $PACKAGE_MANAGER == "pacman" ]]; then
     install_with_pacman "${common_tool_names[@]}" "${windows_tool_names[@]}"
 
     python3 -m pip install --user libtmux
