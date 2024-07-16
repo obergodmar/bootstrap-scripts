@@ -34,14 +34,9 @@ install_with_cargo() {
     return
   fi
 
-  local cargo="$HOME/.cargo/bin/cargo"
-
-  if [[ -f "$cargo" ]]; then
-    if exists cargo; then
-      cargo=$(which cargo)
-    else
-      install_rust
-    fi
+  local cargo=$([[ -f "$HOME/.cargo/bin/cargo" ]] && echo "$HOME/.cargo/bin/cargo" || echo $(which cargo))
+  if ! [[ -f "$cargo" ]]; then
+    install_rust
   fi
 
   display_message "Installing $crate_name..."
