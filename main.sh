@@ -35,18 +35,20 @@ install_tools() {
   local common_tool_names=(
     "git"
     "bison"
-    "ripgrep"
-    "fzf"
     "unzip"
     "wget"
     "curl"
     "gzip"
     "tmux"
-    "screen"
     "zsh"
     "gcc"
     "make"
     "cmake"
+  )
+  local ubuntu_tool_names=(
+    "ripgrep"
+    "fzf"
+    "screen"
     "luarocks"
     "duf"
     "ncdu"
@@ -59,8 +61,6 @@ install_tools() {
     "httpie"
     "trash-cli"
     "entr"
-  )
-  local ubuntu_tool_names=(
     "fd-find"
     "tar"
     "g++"
@@ -72,6 +72,21 @@ install_tools() {
     "mycli"
   )
   local macos_tool_names=(
+    "ripgrep"
+    "fzf"
+    "screen"
+    "luarocks"
+    "duf"
+    "ncdu"
+    "iftop"
+    "vnstat"
+    "qrencode"
+    "autossh"
+    "jq"
+    "btop"
+    "httpie"
+    "trash-cli"
+    "entr"
     "fd"
     "gnu-tar"
     "lazygit"
@@ -81,13 +96,17 @@ install_tools() {
     "mycli"
   )
   local windows_tool_names=(
-  "fd"
-  "tar"
-  "python"
-  "lazygit"
-  "bat"
-  "git-delta"
-)
+    "mingw-w64-ucrt-x86_64-ripgrep"
+    "mingw-w64-ucrt-x86_64-fzf"
+    "mingw-w64-ucrt-x86_64-lua-luarocks"
+    "mingw-w64-ucrt-x86_64-jq"
+    "mingw-w64-ucrt-x86_64-python-send2trash"
+    "mingw-w64-ucrt-x86_64-fd"
+    "tar"
+    "python"
+    "mingw-w64-ucrt-x86_64-bat"
+    "mingw-w64-ucrt-x86_64-delta"
+  )
 
   if [[ $PACKAGE_MANAGER == "apt" ]]; then
     install_with_apt "${common_tool_names[@]}" "${ubuntu_tool_names[@]}"
