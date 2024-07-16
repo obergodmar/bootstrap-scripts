@@ -45,11 +45,9 @@ install_tools() {
     "screen"
     "zsh"
     "gcc"
-    "python3"
     "make"
     "cmake"
     "luarocks"
-    "mycli"
     "duf"
     "ncdu"
     "iftop"
@@ -70,6 +68,8 @@ install_tools() {
     "libxml2-utils"
     "bsdmainutils"
     "wireguard"
+    "python3"
+    "mycli"
   )
   local macos_tool_names=(
     "fd"
@@ -77,7 +77,17 @@ install_tools() {
     "lazygit"
     "bat"
     "git-delta"
+    "python3"
+    "mycli"
   )
+  local windows_tool_names=(
+  "fd"
+  "tar"
+  "python"
+  "lazygit"
+  "bat"
+  "git-delta"
+)
 
   if [[ $PACKAGE_MANAGER == "apt" ]]; then
     install_with_apt "${common_tool_names[@]}" "${ubuntu_tool_names[@]}"
@@ -91,6 +101,10 @@ install_tools() {
     install_with_brew "${common_tool_names[@]}" "${macos_tool_names[@]}"
 
     python3 -m pip install --user libtmux --break-system-packages
+  elif [[ $PACKAGE_MANAGER == "pacman"]]; then
+    install_with_pacman "${common_tool_names[@]}" "${windows_tool_names[@]}"
+
+    python3 -m pip install --user libtmux
   fi
 
   install_nvm

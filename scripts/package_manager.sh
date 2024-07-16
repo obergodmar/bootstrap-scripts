@@ -7,6 +7,8 @@ get_package_manager() {
     echo "apt"
   elif [[ $os == "macos" ]] && exists brew; then
     echo "brew"
+  elif [[ $os == "windows" ]] && exists pacman; then
+    echo "pacman"
   fi
 }
 
@@ -30,6 +32,8 @@ update() {
     update_with_package_manager "sudo apt-get update"
   elif [[ $PACKAGE_MANGAGER == "brew" ]]; then
     update_with_package_manager "brew update"
+  elif [[ $PACKAGE_MANGAGER == "pacman" ]]; then
+    update_with_package_manager "pacman -Suy"
   fi
 }
 
@@ -57,6 +61,12 @@ install_with_brew() {
   local packages="$@"
 
   install_with_package_manager "brew install" "$packages"
+}
+
+install_with_pacman() {
+  local packages="$@"
+
+  install_with_package_manager "pacman -S" "$packages"
 }
 
 install_deb_package() {

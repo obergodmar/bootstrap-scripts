@@ -77,6 +77,8 @@ get_os() {
     echo "linux"
   elif [[ "$OSTYPE" == "darwin"* ]]; then
     echo "macos"
+  elif [[ "$OSTYPE" == "msys" ]]; then
+    echo "windows"
   else
     echo "unsupported os"
   fi
