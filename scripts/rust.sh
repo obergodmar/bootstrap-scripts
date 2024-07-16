@@ -37,10 +37,10 @@ install_with_cargo() {
   local cargo="$HOME/.cargo/bin/cargo"
 
   if [[ -f "$cargo" ]]; then
-    if ! exists cargo; then
-      install_rust
-    else
+    if exists cargo; then
       cargo=$(which cargo)
+    else
+      install_rust
     fi
   fi
 
