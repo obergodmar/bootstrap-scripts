@@ -16,7 +16,8 @@ install_luacheck() {
 
   display_message "Installing luacheck..."
 
-  if sudo luarocks install luacheck; then
+  local luarocks=$([[ -f $(which sudo) ]] && echo "sudo luarocks" || echo "luarocks")
+  if $luarocks install luacheck; then
     display_message "$success"
   else
     display_error "$error"
