@@ -56,7 +56,9 @@ install_with_go() {
   local link="$2"
   local success="$bin is installed"
 
-  source_gvm
+  if [[ "$OS" != "windows" ]]; then
+    source_gvm
+  fi
 
   if exists "$bin"; then
     display_message "$success"

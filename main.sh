@@ -106,6 +106,8 @@ install_tools() {
     "python"
     "mingw-w64-ucrt-x86_64-bat"
     "mingw-w64-ucrt-x86_64-delta"
+    "mingw-w64-ucrt-x86_64-rust"
+    "mingw-w64-ucrt-x86_64-go"
   )
 
   if [[ $PACKAGE_MANAGER == "apt" ]]; then
@@ -127,15 +129,18 @@ install_tools() {
   fi
 
   install_nvm
-  install_rust
-  install_gvm
+
+  if [[ $OS != "windows" ]]; then
+    install_rust
+    install_gvm
+  fi
 
   install_ohmyzsh
 
   install_with_cargo "stylua" "stylua" "--features" "lua52"
   install_with_cargo "tree-sitter" "tree-sitter-cli"
 
-  if [[ $(get_arch) == "x86_64" ]]; then
+  if [[ $(get_arch) == "x86_64" ]] && [[ $OS != 'windows' ]]; then
     install_with_cargo "bob" "bob-nvim"
 
     install_nvim
