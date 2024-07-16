@@ -183,7 +183,9 @@ main() {
 
   configure_tools
 
-  install_go
+  if [[ $OS != "windows" ]]; then
+    install_go
+  fi
   install_with_go "shfmt" "mvdan.cc/sh/v3/cmd/shfmt@latest"
   install_with_go "lemonade" "github.com/lemonade-command/lemonade@latest"
   install_with_go "tmux-fastcopy" "github.com/abhinav/tmux-fastcopy@latest"
