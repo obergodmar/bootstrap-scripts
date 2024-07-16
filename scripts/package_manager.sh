@@ -66,7 +66,7 @@ install_with_brew() {
 install_with_pacman() {
   local packages="$@"
 
-  install_with_package_manager "pacman -S" "$packages"
+  install_with_package_manager "pacman -S --needed" "$packages"
 }
 
 install_deb_package() {
