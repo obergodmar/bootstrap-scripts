@@ -77,7 +77,10 @@ install_tools() {
     "lazygit"
     "bat"
     "git-delta"
+    "gnu-sed"
   )
+
+  python3 -m pip install --user libtmux
 
   if [[ $PACKAGE_MANAGER == "apt" ]]; then
     install_with_apt "${common_tool_names[@]}" "${ubuntu_tool_names[@]}"
@@ -86,11 +89,8 @@ install_tools() {
     install_deb_package "bat" "sharkdp/bat" "bat"
     install_deb_package "delta" "dandavison/delta" "git-delta"
 
-    python3 -m pip install --user libtmux
   elif [[ $PACKAGE_MANAGER == "brew" ]]; then
     install_with_brew "${common_tool_names[@]}" "${macos_tool_names[@]}"
-
-    python3 -m pip install --user libtmux --break-system-packages
   fi
 
   install_nvm
