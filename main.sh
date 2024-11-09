@@ -114,7 +114,6 @@ install_tools() {
 
   install_node
   install_with_npm yarn@1.22.19
-  install_with_npm cspell
   install_with_npm prettier
 
   install_bun
