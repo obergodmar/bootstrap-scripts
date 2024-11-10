@@ -14,8 +14,7 @@ else
   source .env
 fi
 
-SERVER_NAME=${SERVER_NAME:-obergodmar}
-display_message "Starting bootstrap script for server $SERVER_NAME"
+display_message "Starting bootstrap script for server $(hostname)"
 
 OS=$(get_os)
 if [[ $OS == "unsupported os" ]]; then
@@ -43,7 +42,6 @@ install_tools() {
     "gzip"
     "tmux"
     "screen"
-    "zsh"
     "gcc"
     "python3"
     "make"
@@ -54,12 +52,10 @@ install_tools() {
     "ncdu"
     "iftop"
     "vnstat"
-    "qrencode"
     "autossh"
     "jq"
     "btop"
     "htop"
-    "httpie"
     "trash-cli"
     "entr"
   )
@@ -69,7 +65,6 @@ install_tools() {
     "g++"
     "libxml2-utils"
     "bsdmainutils"
-    "wireguard"
     "python3.10-venv"
   )
   local macos_tool_names=(
@@ -87,7 +82,6 @@ install_tools() {
 
     install_lazygit
     install_deb_package "bat" "sharkdp/bat" "bat"
-    install_deb_package "delta" "dandavison/delta" "git-delta"
 
   elif [[ $PACKAGE_MANAGER == "brew" ]]; then
     install_with_brew "${common_tool_names[@]}" "${macos_tool_names[@]}"
@@ -95,12 +89,6 @@ install_tools() {
 
   install_nvm
   install_rust
-  install_gvm
-
-  install_ohmyzsh
-
-  install_with_cargo "stylua" "stylua" "--features" "lua52"
-  install_with_cargo "tree-sitter" "tree-sitter-cli"
 
   if [[ $(get_arch) == "x86_64" ]]; then
     install_with_cargo "bob" "bob-nvim"
@@ -109,23 +97,12 @@ install_tools() {
   fi
 
   install_with_cargo "eza" "eza"
-
-  install_luacheck
-
   install_with_pip "libtmux" "mdformat"
-
   install_node
-  install_with_npm yarn@1.22.19
-  install_with_npm prettier
-
-  install_bun
 }
 
 configure_tools() {
-  configure_git
   configure_bat
-  configure_lazygit
-  configure_ohmyzsh
   configure_nvim
   configure_mycli
   configure_tmux
@@ -150,7 +127,6 @@ main() {
 
   configure_tools
 
-  install_go
   install_with_go "shfmt" "mvdan.cc/sh/v3/cmd/shfmt@latest"
   install_with_go "lemonade" "github.com/lemonade-command/lemonade@latest"
   install_with_go "tmux-fastcopy" "github.com/abhinav/tmux-fastcopy@latest"
