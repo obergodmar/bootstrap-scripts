@@ -34,20 +34,14 @@ configure_nvim() {
   local nvim_dir="$HOME/.config/nvim"
 
   if [[ -d "$nvim_dir" ]]; then
-    display_message "Pulling nvim config dir..."
-
-    if git -C "$nvim_dir" pull; then
-      display_message "nvim config dir is updated"
-    else
-      display_error "could not pull nvim config dir"
-    fi
+    display_warning "nvim config dir exists. Update it yourself..."
 
   else
     local repo="https://github.com/obergodmar/nvim.git"
 
     display_message "Cloning nvim config dir..."
 
-    if git clone "$repo" "$nvim_dir"; then
+    if git clone -b "cause/devops" "$repo" "$nvim_dir"; then
       display_message "nvim config is cloned"
     else
       display_error "could not clone nvim config dir"
