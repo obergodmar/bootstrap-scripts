@@ -80,8 +80,6 @@ install_tools() {
     "gnu-sed"
   )
 
-  python3 -m pip install --user libtmux
-
   if [[ $PACKAGE_MANAGER == "apt" ]]; then
     install_with_apt "${common_tool_names[@]}" "${ubuntu_tool_names[@]}"
 
@@ -127,6 +125,7 @@ configure_tools() {
   configure_nvim
   configure_mycli
   configure_tmux
+  python3 -m pip install --user libtmux
   configure_screen
   configure_lemonade
   configure_btop
