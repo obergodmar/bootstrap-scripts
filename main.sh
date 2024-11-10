@@ -96,7 +96,6 @@ install_tools() {
     install_nvim
   fi
 
-  install_with_cargo "eza" "eza"
   install_node
 }
 
