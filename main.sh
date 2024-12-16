@@ -101,7 +101,7 @@ install_tools() {
   install_with_cargo "tree-sitter" "tree-sitter-cli"
 
   if [[ $(get_arch) == "x86_64" ]]; then
-    install_with_cargo "bob" "bob-nvim"
+    install_with_cargo "bob-nvim" "typos-cli"
 
     install_nvim
   fi
