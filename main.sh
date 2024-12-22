@@ -58,6 +58,7 @@ install_tools() {
     "autossh"
     "jq"
     "btop"
+    "htop"
     "httpie"
     "trash-cli"
     "entr"
