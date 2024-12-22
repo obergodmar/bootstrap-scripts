@@ -92,6 +92,7 @@ install_deb_package() {
   local link="https://github.com/$repo_name/releases/latest/download/${package_name}_${version}_${arch}.deb"
   local tmp_file="$TMP/${bin}.deb"
 
+  display_message "Downloading $link"
   if curl -Lo "$tmp_file" "$link"; then
     display_message "$name deb package is downloaded"
   else

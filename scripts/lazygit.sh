@@ -26,6 +26,7 @@ install_lazygit() {
   local tmp_file="$TMP/lazygit.tar.gz"
   local dist_file="$TMP/lazygit"
 
+  display_message "Downloading $link"
   if curl -Lo "$tmp_file" "$link"; then
     display_message "lazygit release file is downloaded"
   else
