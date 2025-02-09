@@ -1,11 +1,20 @@
 #!/usr/bin/env bash
 
+update_rust() {
+  if rustup update stable; then
+    display_message "rust is updated"
+  else
+    display_error "could not update rust"
+  fi
+}
+
 install_rust() {
   local success="rust is installed"
   local cargo_dir="$HOME/.cargo"
 
   if [[ -d "$cargo_dir" ]]; then
     display_message "$success"
+    update_rust
 
     return
   fi
