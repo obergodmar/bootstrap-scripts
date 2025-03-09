@@ -13,6 +13,9 @@ configure_git() {
 
   local git_cmd="git config --global"
 
+  # https://github.com/catppuccin/delta
+  local delta_theme="$HOME/dotfiles/delta/themes/catppuccin.gitconfig"
+
   echo_run $git_cmd user.name "${GIT_USER_NAME:-"Vitaly ($SERVER_NAME)"}"
   echo_run $git_cmd user.email "${GIT_USER_EMAIL:-"obergodmar@gmail.com"}"
 
@@ -25,34 +28,9 @@ configure_git() {
 
   echo_run $git_cmd diff.colorMoved "default"
 
-  echo_run $git_cmd delta.true-color "always"
-  echo_run $git_cmd delta.syntax-theme "Kanagawa"
-  echo_run $git_cmd delta.features "decorations"
-  echo_run $git_cmd delta.whitespace-error-style "22 reverse"
-  echo_run $git_cmd delta.line-numbers "true"
-  echo_run $git_cmd delta.navigate "true"
-  echo_run $git_cmd delta.light "false"
-  echo_run $git_cmd delta.file-style "blue"
-  echo_run $git_cmd delta.minus-style "syntax '#43242B'"
-  echo_run $git_cmd delta.minus-non-emph-style "syntax '#43242B'"
-  echo_run $git_cmd delta.minus-emph-style "'#1F1F28' '#C34043'"
-  echo_run $git_cmd delta.minus-empty-line-marker-style "normal '#43242B'"
-  echo_run $git_cmd delta.zero-style "syntax"
-  echo_run $git_cmd delta.plus-style "syntax '#2B3328'"
-  echo_run $git_cmd delta.plus-non-emph-style "syntax '#2B3328'"
-  echo_run $git_cmd delta.plus-emph-style "'#1F1F28' '#76946A'"
-  echo_run $git_cmd delta.plus-empty-line-marker-style "normal '#2B3328'"
-  echo_run $git_cmd delta.line-numbers-plus-style "green"
-  echo_run $git_cmd delta.line-numbers-minus-style "red"
-  echo_run $git_cmd delta.line-numbers-left-format "{nm: >4}┊"
-  echo_run $git_cmd delta.line-numbers-right-format "{np: >4}┊"
-  echo_run $git_cmd delta.line-numbers-left-style "red"
-  echo_run $git_cmd delta.line-numbers-right-style "green"
+  echo_run $git_cmd include.path "$delta_theme"
 
-  echo_run $git_cmd delta.decorations.commit-decoration-style "normal box ul"
-  echo_run $git_cmd delta.decorations.file-style "normal ul"
-  echo_run $git_cmd delta.decorations.file-decoration-style "normal box"
-  echo_run $git_cmd delta.decorations.hunk-header-decoration-style "normal box ul"
+  echo_run $git_cmd delta.features "catppuccin-macchiato"
 
   display_message "Setting global .gitconfig complete"
 }

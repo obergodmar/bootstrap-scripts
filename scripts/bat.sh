@@ -3,11 +3,10 @@
 configure_bat() {
   display_message "Setting bat..."
 
-  local config_dir="$HOME/.config/bat"
+  local config_dir="$(bat --config-dir)"
   local themes_dir="$config_dir/themes"
-  local kanagawa_theme="kanagawa-tmTheme"
-  local kanagawa_dir="$themes_dir/$kanagawa_theme"
-  local theme_repo="https://github.com/obergodmar/kanagawa-tmTheme.git"
+  local catpuccin_theme="Catppuccin Macchiato.tmTheme"
+  local catpuccin_theme_repo="https://github.com/catppuccin/bat/raw/main/themes/Catppuccin%20Macchiato.tmTheme"
 
   local dotfiles_file="$HOME/dotfiles/.config/bat/config"
 
@@ -21,17 +20,17 @@ configure_bat() {
     fi
   fi
 
-  if [[ -d "$kanagawa_dir" ]]; then
-    display_message "Pulling bat kanagawa theme"
+  if [[ -f "$themes_dir/$catpuccin_theme" ]]; then
+    display_message "Updating bat catpuccin theme"
 
-    if ! git -C "$kanagawa_dir" pull; then
-      display_error "Could not update kanagawa theme"
+    if ! wget -P "$themes_dir" $catpuccin_theme_repo; then
+      display_error "Could not update catpuccin theme"
     fi
   else
-    display_message "Clonning kanagawa bat theme"
+    display_message "Downloading catpuccin bat theme"
 
-    if ! git clone "$theme_repo" "$kanagawa_dir"; then
-      display_error "Could not clone kanagawa bat theme"
+    if ! wget -P "$themes_dir" $catpuccin_theme_repo; then
+      display_error "Could not download catpuccin bat theme"
     fi
   fi
 
