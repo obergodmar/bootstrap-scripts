@@ -24,13 +24,13 @@ configure_git() {
 
   echo_run $git_cmd interactive.diffFilter "delta --color-only"
 
-  echo_run $git_cmd merge.conflictstyle "diff3"
-
-  echo_run $git_cmd diff.colorMoved "default"
+  echo_run $git_cmd merge.conflictStyle "zdiff3"
 
   echo_run $git_cmd include.path "$delta_theme"
 
   echo_run $git_cmd delta.features "catppuccin-macchiato"
+
+  echo_run $git_cmd delta.navigate "true"
 
   display_message "Setting global .gitconfig complete"
 }
