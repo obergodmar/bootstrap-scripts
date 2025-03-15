@@ -67,6 +67,8 @@ add_apt_repository() {
   else
     display_error "could not add repository"
   fi
+
+  update
 }
 
 install_with_brew() {
