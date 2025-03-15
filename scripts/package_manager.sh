@@ -53,6 +53,22 @@ install_with_apt() {
   install_with_package_manager "sudo apt install -y" "$packages"
 }
 
+add_apt_repository() {
+  local repo=$1
+
+  display_message "Adding $repo repository..."
+
+  if ! exists add-apt-repository; then
+    install_with_apt software-properties-common
+  fi
+
+  if sudo add-apt-repository -y $repo; then
+    display_message "$repo epository added"
+  else
+    display_error "could not add repository"
+  fi
+}
+
 install_with_brew() {
   local packages="$@"
 

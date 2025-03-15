@@ -82,6 +82,7 @@ install_tools() {
   )
 
   if [[ $PACKAGE_MANAGER == "apt" ]]; then
+    add_apt_repository "ppa:git-core/ppa"
     install_with_apt "${common_tool_names[@]}" "${ubuntu_tool_names[@]}"
 
     install_lazygit
