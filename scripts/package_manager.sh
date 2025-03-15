@@ -55,6 +55,7 @@ install_with_apt() {
 
 add_apt_repository() {
   local repo=$1
+  local apt_cache_name=$2
 
   display_message "Adding $repo repository..."
 
@@ -62,8 +63,14 @@ add_apt_repository() {
     install_with_apt software-properties-common
   fi
 
+  if apt-cache policy | grep $apt_cache_name; then
+    display_message "$repo repository is already added. Skipping..."
+
+    return
+  fi
+
   if sudo add-apt-repository -y $repo; then
-    display_message "$repo epository added"
+    display_message "$repo repository added"
   else
     display_error "could not add repository"
   fi
