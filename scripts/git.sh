@@ -11,6 +11,16 @@ echo_run() {
 configure_git() {
   display_message "Setting global .gitconfig..."
 
+  local gitconfig="$HOME/.gitconfig"
+
+  if [[ -f "$gitconfig" ]]; then
+    display_warning "Global .gitconfig already exists"
+
+    if mv "$gitconfig" "$gitconfig.old"; then
+      display_message "Renamed existed .gitconfig to .gitconfig.old"
+    fi
+  fi
+
   local git_cmd="git config --global"
 
   # https://github.com/catppuccin/delta
