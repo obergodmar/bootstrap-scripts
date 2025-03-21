@@ -141,6 +141,10 @@ main() {
   update
   install_tools
 
+  if ! [[ -z $INSTALL_DOCKER ]]; then
+    install_docker
+  fi
+
   clone_dotfiles
 
   configure_tools
