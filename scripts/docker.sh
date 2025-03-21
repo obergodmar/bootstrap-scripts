@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 install_docker() {
     display_message "Installing docker..."
 
