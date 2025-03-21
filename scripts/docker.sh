@@ -21,7 +21,7 @@ install_docker() {
     local apt_repository="deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable"
 
     if ! [[ -f "/etc/apt/keyrings/docker.asc" ]]; then
-        if prepare_keyrings && fetch_gpg_key && prepare_docker_key && echo "$apt_repository" | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null; then
+        if "$prepare_keyrings" && "$fetch_gpg_key" && "$prepare_docker_key" && echo "$apt_repository" | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null; then
             display_message "Docker repository is successfully added"
         else
             display_error "Could not add docker repository"
