@@ -67,7 +67,6 @@ install_tools() {
     "fd-find"
     "tar"
     "g++"
-    "python3-pip"
     "libxml2-utils"
     "bsdmainutils"
     "wireguard"
@@ -112,6 +111,8 @@ install_tools() {
 
   install_luacheck
 
+  install_with_pip "libtmux" "mdformat"
+
   install_node
   install_with_npm yarn@1.22.19
   install_with_npm prettier
@@ -127,7 +128,6 @@ configure_tools() {
   configure_nvim
   configure_mycli
   configure_tmux
-  python3 -m pip install --user libtmux
   configure_screen
   configure_lemonade
   configure_btop
