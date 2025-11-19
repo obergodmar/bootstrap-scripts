@@ -79,3 +79,17 @@ configure_nvim() {
 
   display_message "Setting neovim complete"
 }
+
+remove_nvim_config() {
+  display_message "Removing neovim configuration..."
+
+  local nvim_dir="$HOME/.config/nvim"
+  remove_file_or_directory "$nvim_dir" "neovim configuration directory"
+
+  # Remove neovim cache and data
+  remove_file_or_directory "$HOME/.local/share/nvim" "neovim data directory"
+  remove_file_or_directory "$HOME/.local/state/nvim" "neovim state directory"
+  remove_file_or_directory "$HOME/.cache/nvim" "neovim cache directory"
+
+  display_message "neovim configuration removal complete"
+}

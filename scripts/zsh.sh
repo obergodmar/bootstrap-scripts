@@ -19,7 +19,7 @@ install_ohmyzsh() {
   # Installing zsh-autosuggestions zsh plugin
   local as_repo=https://github.com/obergodmar/zsh-autosuggestions
   local target="${ZSH_CUSTOM:-"$ohmyzsh/custom"}/plugins/zsh-autosuggestions"
-  local as_sucess="zsh plugin 'zsh-autosuggestions' is installed"
+  local as_success="zsh plugin 'zsh-autosuggestions' is installed"
 
   if [[ -d $target ]]; then
     display_message "Pulling zsh autosuggestions"
@@ -29,7 +29,7 @@ install_ohmyzsh() {
     fi
   else
     if git clone $as_repo $target; then
-      display_message "$as_sucess"
+      display_message "$as_success"
     else
       display_error "zsh plugin 'zsh-autosuggestions' was NOT installed"
     fi
@@ -94,4 +94,36 @@ EOF
   else
     display_error "could not set zsh as default shell"
   fi
+}
+
+remove_ohmyzsh_config() {
+  display_message "Removing oh-my-zsh configuration..."
+
+  local ohmyzsh="$HOME/.oh-my-zsh"
+  local theme_file="$HOME/.oh-my-zsh/themes/obergodmar.zsh-theme"
+
+  # Remove custom theme
+  if [[ -f "$theme_file" ]]; then
+    remove_file_or_directory "$theme_file" "custom zsh theme"
+  fi
+
+  # Restore original theme if backup exists
+  if [[ -f "$theme_file.old" ]]; then
+    display_message "Restoring original theme from backup"
+    mv "$theme_file.old" "$theme_file"
+  fi
+
+  # Unlink .zshrc
+  unlink_config_file "." ".zshrc"
+
+  # Remove oh-my-zsh completely
+  remove_file_or_directory "$ohmyzsh" "oh-my-zsh directory"
+
+  # Reset shell to bash if current shell is zsh
+  if [[ $SHELL == */zsh ]]; then
+    display_message "Changing default shell back to bash"
+    chsh -s /bin/bash 2>/dev/null || display_warning "Could not change default shell to bash"
+  fi
+
+  display_message "oh-my-zsh configuration removal complete"
 }

@@ -70,3 +70,34 @@ link_config_file() {
     display_error "Could not link config file"
   fi
 }
+
+remove_dotfiles() {
+  display_message "Removing dotfiles..."
+
+  remove_file_or_directory "$DOTFILES" "dotfiles directory"
+
+  display_message "Dotfiles removal complete"
+}
+
+unlink_config_file() {
+  local config_dir="$1"
+  local config_name="$2"
+  local config_file="$HOME/$config_dir/$config_name"
+  local config_backup="$config_file.old"
+
+  if [[ -L "$config_file" ]]; then
+    display_message "Removing symlink: $config_file"
+    rm -f "$config_file"
+
+    # Restore backup if it exists
+    if [[ -f "$config_backup" ]]; then
+      display_message "Restoring original config from backup: $config_backup"
+      mv "$config_backup" "$config_file"
+    fi
+  elif [[ -f "$config_file" ]]; then
+    display_message "Config file exists but is not a symlink: $config_file"
+    backup_and_remove "$config_file" "config file"
+  else
+    display_message "Config file does not exist: $config_file"
+  fi
+}

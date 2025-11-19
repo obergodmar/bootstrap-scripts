@@ -19,3 +19,14 @@ configure_tmux() {
 
   display_message "Setting tmux complete"
 }
+
+remove_tmux_config() {
+  display_message "Removing tmux configuration..."
+
+  unlink_config_file "." ".tmux.conf"
+
+  # Remove tmux plugin manager and plugins
+  remove_file_or_directory "$HOME/.tmux" "tmux plugins directory"
+
+  display_message "tmux configuration removal complete"
+}

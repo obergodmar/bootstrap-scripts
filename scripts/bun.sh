@@ -21,3 +21,14 @@ install_bun() {
   fi
 }
 
+uninstall_bun() {
+  display_message "Uninstalling bun..."
+
+  local bun_dir="$HOME/.bun"
+  remove_file_or_directory "$bun_dir" "bun directory"
+
+  # Remove bun cache if exists
+  remove_file_or_directory "$HOME/.bun-cache" "bun cache directory"
+
+  display_message "bun uninstallation complete"
+}

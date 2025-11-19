@@ -81,3 +81,35 @@ get_os() {
     echo "unsupported os"
   fi
 }
+
+remove_file_or_directory() {
+  local path="$1"
+  local description="${2:-file/directory}"
+
+  if [[ -e "$path" ]]; then
+    display_message "Removing $description: $path"
+    if rm -rf "$path"; then
+      display_message "$description removed successfully"
+    else
+      display_error "Could not remove $description: $path"
+    fi
+  else
+    display_message "$description does not exist: $path"
+  fi
+}
+
+backup_and_remove() {
+  local path="$1"
+  local description="${2:-file}"
+
+  if [[ -e "$path" ]]; then
+    display_message "Backing up and removing $description: $path"
+    if mv "$path" "${path}.backup.$(date +%Y%m%d_%H%M%S)"; then
+      display_message "$description backed up and removed"
+    else
+      display_error "Could not backup $description: $path"
+    fi
+  else
+    display_message "$description does not exist: $path"
+  fi
+}

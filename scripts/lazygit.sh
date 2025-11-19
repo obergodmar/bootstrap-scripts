@@ -61,3 +61,11 @@ configure_lazygit() {
 
   display_message "Setting lazygit complete"
 }
+
+remove_lazygit_config() {
+  display_message "Removing lazygit configuration..."
+
+  unlink_config_file ".config/lazygit" "config.yml"
+
+  display_message "lazygit configuration removal complete"
+}

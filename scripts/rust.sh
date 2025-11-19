@@ -59,3 +59,48 @@ install_with_cargo() {
     display_error "could not install $crate_name"
   fi
 }
+
+uninstall_rust_and_cargo() {
+  display_message "Uninstalling rust and cargo..."
+
+  local cargo_dir="$HOME/.cargo"
+  local rustup_dir="$HOME/.rustup"
+
+  # Use rustup to uninstall if available
+  if exists rustup; then
+    display_message "Using rustup to uninstall rust toolchain..."
+    rustup self uninstall -y 2>/dev/null || display_warning "Could not use rustup self uninstall"
+  fi
+
+  # Remove directories
+  remove_file_or_directory "$cargo_dir" "cargo directory"
+  remove_file_or_directory "$rustup_dir" "rustup directory"
+
+  display_message "Rust and cargo uninstallation complete"
+}
+
+uninstall_with_cargo() {
+  local bin="$1"
+  local crate_name="$2"
+  local success="$crate_name is uninstalled"
+
+  if ! exists "$bin"; then
+    display_message "$bin is not installed"
+    return
+  fi
+
+  local cargo="$HOME/.cargo/bin/cargo"
+
+  if ! [[ -f "$cargo" ]]; then
+    display_message "Cargo not found, cannot uninstall $crate_name"
+    return
+  fi
+
+  display_message "Uninstalling $crate_name..."
+
+  if $cargo uninstall "$crate_name" 2>/dev/null; then
+    display_message "$success"
+  else
+    display_warning "Could not uninstall $crate_name (may not be installed via cargo)"
+  fi
+}

@@ -44,3 +44,26 @@ configure_git() {
 
   display_message "Setting global .gitconfig complete"
 }
+
+remove_git_config() {
+  display_message "Removing global .gitconfig..."
+
+  local gitconfig="$HOME/.gitconfig"
+  local gitconfig_old="$gitconfig.old"
+
+  if [[ -f "$gitconfig" ]]; then
+    backup_and_remove "$gitconfig" "gitconfig"
+  fi
+
+  # Restore old config if it exists
+  if [[ -f "$gitconfig_old" ]]; then
+    display_message "Restoring original .gitconfig from backup"
+    if mv "$gitconfig_old" "$gitconfig"; then
+      display_message "Original .gitconfig restored"
+    else
+      display_error "Could not restore original .gitconfig"
+    fi
+  fi
+
+  display_message "Git configuration cleanup complete"
+}

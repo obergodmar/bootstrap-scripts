@@ -7,3 +7,11 @@ configure_mycli() {
 
   display_message "Setting mycli complete"
 }
+
+remove_mycli_config() {
+  display_message "Removing mycli configuration..."
+
+  unlink_config_file "." ".myclirc"
+
+  display_message "mycli configuration removal complete"
+}

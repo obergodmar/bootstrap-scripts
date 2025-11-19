@@ -42,3 +42,18 @@ configure_bat() {
 
   display_message "Setting bat complete"
 }
+
+remove_bat_config() {
+  display_message "Removing bat configuration..."
+
+  # Unlink config file
+  unlink_config_file ".config/bat" "config"
+
+  # Remove bat config directory and themes
+  local config_dir="$(bat --config-dir 2>/dev/null)"
+  if [[ -n "$config_dir" ]]; then
+    remove_file_or_directory "$config_dir" "bat configuration directory"
+  fi
+
+  display_message "bat configuration removal complete"
+}

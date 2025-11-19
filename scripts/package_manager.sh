@@ -134,3 +134,69 @@ install_deb_package() {
 
   rm $tmp_file
 }
+
+uninstall_with_package_manager() {
+  local cmd="$1"
+  local packages="$2"
+  local success="$packages are uninstalled"
+
+  display_message "Uninstalling $packages..."
+
+  if $cmd $packages; then
+    display_message "$success"
+  else
+    display_warning "$packages where NOT uninstalled (may not be installed or have dependencies)"
+  fi
+}
+
+uninstall_with_apt() {
+  local packages="$@"
+
+  for package in $packages; do
+    if dpkg -l | grep -q "^ii.*$package "; then
+      uninstall_with_package_manager "sudo apt remove --purge -y" "$package"
+    else
+      display_message "$package is not installed via apt"
+    fi
+  done
+}
+
+uninstall_with_brew() {
+  local packages="$@"
+
+  for package in $packages; do
+    if brew list | grep -q "^$package$"; then
+      uninstall_with_package_manager "brew uninstall" "$package"
+    else
+      display_message "$package is not installed via brew"
+    fi
+  done
+}
+
+uninstall_deb_packages() {
+  display_message "Removing manually installed deb packages..."
+
+  # Remove bat if installed manually
+  if exists bat && ! dpkg -l | grep -q "^ii.*bat "; then
+    display_message "Removing manually installed bat..."
+    sudo apt remove --purge -y bat 2>/dev/null || display_warning "Could not remove bat"
+  fi
+
+  # Remove delta if installed manually
+  if exists delta && ! dpkg -l | grep -q "^ii.*git-delta "; then
+    display_message "Removing manually installed delta..."
+    sudo apt remove --purge -y git-delta 2>/dev/null || display_warning "Could not remove delta"
+  fi
+}
+
+remove_apt_repositories() {
+  display_message "Removing added apt repositories..."
+
+  # Remove git-core PPA
+  if apt-cache policy | grep -q "git-core"; then
+    display_message "Removing git-core PPA..."
+    sudo add-apt-repository --remove -y ppa:git-core/ppa 2>/dev/null || display_warning "Could not remove git-core PPA"
+  fi
+
+  update 2>/dev/null || true
+}

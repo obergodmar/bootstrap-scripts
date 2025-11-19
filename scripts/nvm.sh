@@ -73,3 +73,41 @@ install_with_npm() {
     display_error "could not install $package"
   fi
 }
+
+uninstall_nvm_and_node() {
+  display_message "Uninstalling nvm and node..."
+
+  # Remove nvm directory
+  local nvm_dir="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+  remove_file_or_directory "$nvm_dir" "nvm directory"
+
+  # Remove nvm cache
+  remove_file_or_directory "$HOME/.npm" "npm cache directory"
+  remove_file_or_directory "$HOME/.node_repl_history" "node repl history"
+
+  # Remove global npm packages directory (if using nvm)
+  remove_file_or_directory "$HOME/.npm-global" "npm global packages directory"
+
+  display_message "nvm and node uninstallation complete"
+}
+
+uninstall_with_npm() {
+  local package="$1"
+  local success="$package is uninstalled"
+
+  source_nvm
+
+  # Check if package is installed globally
+  if ! npm list -g --depth=0 "$package" >/dev/null 2>&1; then
+    display_message "$package is not installed globally"
+    return
+  fi
+
+  display_message "Uninstalling $package..."
+
+  if npm uninstall -g "$package" 2>/dev/null; then
+    display_message "$success"
+  else
+    display_warning "Could not uninstall $package"
+  fi
+}
