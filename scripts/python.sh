@@ -25,13 +25,7 @@ install_with_pip() {
 
   local success="$package_name is installed"
 
-  if [[ -f "$pip" ]]; then
-    create_venv
-  else
-    display_error "Python virtual environment not found at $VENV_DIR"
-
-    return
-  fi
+  create_venv
 
   if $pip show "$package_name" &>/dev/null; then
     display_message "$success"
