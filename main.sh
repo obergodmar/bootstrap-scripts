@@ -70,6 +70,7 @@ install_tools() {
     "libxml2-utils"
     "bsdmainutils"
     "wireguard"
+    "python3.10-venv"
   )
   local macos_tool_names=(
     "fd"
